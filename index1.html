@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="button">GET USERS</button>
+    <button id="button1">GET POSTS</button>
+    <div id="users">
+    </div>
+</body>
+<script>
+    function fun() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', "https://dummyapi.io/data/api/user", true)
+        xhr.setRequestHeader('app-id', '6006b2e50b2b6f8791b9d7d9');
+        xhr.onload = function () {
+            if (this.status == 200) {
+                var res = JSON.parse(xhr.responseText)
+                console.log(res.data.length)
+                var output = ''
+                for (var i = 0 ; i<res.data.length ; i++ )  {
+
+                    output += `<div>
+                        <img src=${res.data[i].picture}>
+                                <h3>${res.data[i].firstName} ${res.data[i].lastName}</h3>
+                                <h4>${res.data[i].email}</h4>
+                               <div>`
+                }
+                document.getElementById('users').innerHTML = output
+            }
+        }
+        xhr.send();
+    }
+
+    function pos(){
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET',"https://dummyapi.io/data/api/post",true)
+        xhr.setRequestHeader('app-id', '6006b2e50b2b6f8791b9d7d9');
+        xhr.onload = function(){
+            var res = JSON.parse(xhr.responseText)
+            console.log(res)
+        }
+        xhr.send();
+    }
+
+    document.getElementById('button').addEventListener('click', fun)
+    document.getElementById('button1').addEventListener('click',pos)
+</script>
+
+</html>
